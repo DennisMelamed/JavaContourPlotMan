@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package charting;
 
 import edu.mines.jtk.interp.SibsonInterpolator2;
 import java.awt.Color;
-import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
@@ -56,7 +50,9 @@ public class ContourPlot extends XYPlot
      * @param highColor highest color that should appear on the color-grayLookupScale (useful to focus in on small variations)
      * @param numberOfColors ONLY FOR COLOR PLOTS: number of colors to define in between the highColor and lowColors
      */
-    public ContourPlot(float[][] data, double accuracy, boolean color, double lowDomain, double highDomain, double lowRange, double highRange, double lowColor, double highColor, int numberOfColors)
+    public ContourPlot(float[][] data, double accuracy, boolean color, double lowDomain, 
+            double highDomain, double lowRange, double highRange, double lowColor, 
+            double highColor, int numberOfColors)
     {
         super();
 
@@ -65,6 +61,37 @@ public class ContourPlot extends XYPlot
         setRenderer(accuracy);
 
         setPaintScaleLegend(color,lowColor,highColor, numberOfColors);
+
+        setDataset(data, accuracy);
+
+        setRenderer(renderer);
+
+    }
+    
+    /**
+     *
+     * @param data a 2d array of floats, data[0] is a list of x values, data[1] is a list of the corresponding y values, and data[2] is the z value of each point
+     * @param accuracy number of boxes to be drawn between each unit tick mark (higher number means higher resolution contour plot)
+     * @param color boolean defining if the chart should be in color or not
+     * @param lowDomain lowest value in the domain of the dataset
+     * @param highDomain highest value in the domain of the dataset
+     * @param lowRange lowest value in the range of the dataset
+     * @param highRange highest value in the range of the dataset
+     * @param lowColor lowest value that should appear on the color-grayLookupScale (useful to focus in on small variations)
+     * @param highColor highest color that should appear on the color-grayLookupScale (useful to focus in on small variations)
+     * defaults to 10,000 different colors generated for color plots
+     */
+    public ContourPlot(float[][] data, double accuracy, boolean color, double lowDomain, 
+            double highDomain, double lowRange, double highRange, double lowColor, 
+            double highColor)
+    {
+        super();
+
+        setBothAxis(lowDomain, highDomain, lowRange, highRange);
+
+        setRenderer(accuracy);
+
+        setPaintScaleLegend(color,lowColor,highColor, 10000);
 
         setDataset(data, accuracy);
 
